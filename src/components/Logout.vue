@@ -10,6 +10,7 @@
             console.log(result)
             if(result) {
                 sessionStorage.removeItem("TOKEN");
+                sessionStorage.removeItem("ROLE");
                 this.$router.push({name:'Home'}); //성공 시 home으로 이동
             }
             this.$router.push({name:'Home'}); // home으로 이동

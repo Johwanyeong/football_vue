@@ -4,6 +4,7 @@
     <router-link to="/Join">Join</router-link>|
     <router-link to="/Login">Login</router-link>|
     <router-link to="/Logout">Logout</router-link>|
+    <router-link to="/Registration">Registration</router-link>|
     <hr />
     <router-view />
   </div>
