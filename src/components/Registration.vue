@@ -10,18 +10,24 @@
         <input type="button" @click="handelAgent" value="에이전트 등록" />
         <hr />
 
-        <!-- <h3>선수 등록</h3>
+        <h3>선수 등록</h3>
         이름 <input type="text" v-model="playername" placeholder="이름 입력"/> <br />
         나이 <input type="text" v-model="playerage" placeholder="나이 입력"/> 세 <br />
         신장 <input type="text" v-model="playerheight" placeholder="신장 입력"/> cm<br />
         몸무게 <input type="text" v-model="playerweight" placeholder="몸무게 입력"/> kg <br />
-        포지션 <input type="text" v-model="playerposition" placeholder="포지션 입력"/> <br />
+        포지션 <select v-model="playerposition" >
+                        <option value="FWD">FWD</option>
+                        <option value="MD">MD</option>
+                        <option value="DF">DF</option> 
+                    </select> <br />
         나라 <input type="text" v-model="playercountry" placeholder="나라 입력"/> <br />
         몸값 <input type="text" v-model="playerprice" placeholder="몸값 입력"/> \<br />
         사진 <input type="file" @change="handleFile" /> <br />
-        소속 팀 <input type="text" v-model="team" placeholder="몸값 입력"/> <br />
-        에이전트 <input type="text" v-model="agent" placeholder="몸값 입력"/> <br />
-        <hr /> -->
+        소속 팀 <select  v-model="playerteam" @click="handleTeamList">
+                        <option v-for="(teams, idx) in teams" v-bind:key="idx" :value='teamname'>{{teams.teamname}}</option> 
+                    </select> <br />
+        에이전트 <input type="text" v-model="agent" placeholder="에이전트 입력"/> <br />
+        <hr />
 
     </div>
 </template>
@@ -70,6 +76,15 @@
                     alert("관리자 id로 로그인 후 등록 가능합니다.")
                 }
             },
+            async handleTeamList(){
+                const url = "/REST/teamall";
+                const headers = {"Content-Type":"application/json"}
+                const response = await axios.get(url, headers);
+                console.log(response);
+                if(response.data.status === 200){
+                    this.teams = response.data.teams
+                }
+            }
         },
         data(){
             return{
@@ -79,6 +94,17 @@
                 teamname : '',
 
                 agentname : '',
+
+                playername : '',
+                playerage : '',
+                playerheight : '',
+                playerweight : '',
+                playerposition : '',
+                playercountry : '',
+                playerprice : '',
+                playerteam : '',
+                agent : '',
+                teams : []
             }
         }
     }
