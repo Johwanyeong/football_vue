@@ -2,12 +2,12 @@
     <div>
         <h3>팀 등록</h3>
         팀 명 <input type="text" v-model="teamname" placeholder="팀 명 입력"/> <br />
-        <input type="button" @click="handelTeam" value="팀 등록" />
+        <input type="button" @click="handleTeam" value="팀 등록" />
         <hr />
 
         <h3>에이전트 등록</h3>
         에이전트 명 <input type="text" v-model="agentname" placeholder="에이전트 명 입력"/> <br />
-        <input type="button" @click="handelAgent" value="에이전트 등록" />
+        <input type="button" @click="handleAgent" value="에이전트 등록" />
         <hr />
 
         <h3>선수 등록</h3>
@@ -23,8 +23,8 @@
         나라 <input type="text" v-model="playercountry" placeholder="나라 입력"/> <br />
         몸값 <input type="text" v-model="playerprice" placeholder="몸값 입력"/> \<br />
         사진 <input type="file" @change="handleFile" /> <br />
-        소속 팀 <select  v-model="playerteam" @click="handleTeamList">
-                        <option v-for="(teams, idx) in teams" v-bind:key="idx" :value='teamname'>{{teams.teamname}}</option> 
+        소속 팀  <select  v-model="playerteam" @click="handleTeamList" >
+                        <option  value="dd" >{{teams.teamno}}</option> 
                     </select> <br />
         에이전트 <input type="text" v-model="agent" placeholder="에이전트 입력"/> <br />
         <hr />
@@ -36,7 +36,7 @@
     import axios from 'axios';
     export default {
         methods:{
-            async handelTeam(){
+            async handleTeam(){
                 //유효성 검사
                 if(this.teamname.length === 0){
                     alert("팀 명을 입력하세요.");
@@ -56,7 +56,7 @@
                     alert("관리자 id로 로그인 후 등록 가능합니다.")
                 }
             },
-            async handelAgent(){
+            async handleAgent(){
                 //유효성 검사
                 if(this.agentname.length === 0){
                     alert("에이전트 명을 입력하세요.");
@@ -79,10 +79,10 @@
             async handleTeamList(){
                 const url = "/REST/teamall";
                 const headers = {"Content-Type":"application/json"}
-                const response = await axios.get(url, headers);
+                const response = await axios.get(url, {headers});
                 console.log(response);
                 if(response.data.status === 200){
-                    this.teams = response.data.teams
+                    this.teams = response.data.teams;
                 }
             }
         },
