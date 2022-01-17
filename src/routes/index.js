@@ -5,6 +5,7 @@ import Join from '@/components/Join'
 import Login from '@/components/Login'
 import Logout from '@/components/Logout'
 import Registration from '@/components/Registration'
+import PlayerList from '@/components/PlayerList'
 
 const routes = [
     {path:'/',  name:'Home', component:Home},
@@ -12,6 +13,7 @@ const routes = [
     {path:'/Login',  name:'Login', component:Login},
     {path:'/Logout',  name:'Logout', component:Logout},
     {path:'/Registration',  name:'Registration', component:Registration},
+    {path:'/PlayerList',  name:'PlayerList', component:PlayerList},
 ]
 
 const router = createRouter({

@@ -5,6 +5,7 @@
     <router-link v-if="!logged" to="/Login">Login</router-link>|
     <router-link v-if="logged" to="/Logout">Logout</router-link>|
     <router-link v-if="adminLogged" to="/Registration">Registration</router-link>|
+    <router-link to="/PlayerList">PlayerList</router-link>|
 
     <hr />
     <router-view />
