@@ -17,22 +17,31 @@
                 <td>{{player.playerprice}}</td>
             </tr>
         </table>
+        <paging : totalpage="totalpage" @movePage="movePage" />
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import Paging from './Paging.vue';
     export default {
+    components: { Paging },
+        movePage(page) {
+            this.fetchData(page)
+        },
         async created(){
-            const url = "/REST/playerall";
+            const url = `/REST/playerall?page=${this.page}`;
             const headers = {"Content-Type":"application/json"}
             const response = await axios.get(url, {headers});
             console.log(response);
             this.players = response.data.player;
+            this.totalpage = response.data.totalpage;
         },
         data(){
             return{
-                players : []
+                players : [],
+                page : 1,
+                totalpage : null
             }
         }
     }
