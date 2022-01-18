@@ -17,18 +17,18 @@
                 <td>{{player.playerprice}}</td>
             </tr>
         </table>
-        <paging : totalpage="totalpage" @movePage="movePage" />
+        <hr />
+        <div class="block">
+            <span class="demonstration">When you have few pages</span>
+            <el-pagination layout="prev, pager, next" :total="totalpage"
+            @current-change="handleCurrentChange"></el-pagination>
+        </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
-    import Paging from './Paging.vue';
     export default {
-    components: { Paging },
-        movePage(page) {
-            this.fetchData(page)
-        },
         async created(){
             const url = `/REST/playerall?page=${this.page}`;
             const headers = {"Content-Type":"application/json"}
@@ -37,16 +37,25 @@
             this.players = response.data.player;
             this.totalpage = response.data.totalpage;
         },
+        methods:{
+             //페이지 이동
+            async handleCurrentChange(val){
+                this.page = val;
+                await this.created();
+            }
+        },
+       
         data(){
             return{
                 players : [],
                 page : 1,
-                totalpage : null
+                totalpage : 20,
+                pages : 100
             }
         }
     }
 </script>
 
-<style scoped>
+<style >
 
 </style>
