@@ -45,8 +45,9 @@
                 // console.log(response);
                 this.players = response.data.player;
  
-                const response1 = await axios.get(url);
-                // console.log(response1);
+                const url1 = `/REST/playercount` //전체 선수 숫자 조회 주소 입력
+                const response1 = await axios.get(url1);
+                console.log(response1);
                 //전체 선수 수를 통해 페이지네이션 숫자 생성
                 this.totalpage = Number(response1.data.count);
             }

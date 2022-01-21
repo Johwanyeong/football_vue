@@ -8,6 +8,11 @@
     <router-link to="/PlayerList">PlayerList</router-link>|
 
     <hr />
+    <el-menu
+    :default-active="activeIndex" class="el-menu-demo" mode="horizontal" 
+    @select="handleSelect">
+    <el-menu-item v-if="logged" index="1">Processing Center</el-menu-item>
+    </el-menu>
     <router-view />
   </div>
 </template>
