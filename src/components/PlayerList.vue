@@ -12,7 +12,7 @@
                 <td>몸 값</td>
             </tr>
             <tr v-for="player in players" v-bind:key="player">
-                <td>{{player.playername}}</td>
+                <td><a href="#" @click="nextPage(player.playerno)">{{player.playername}}</a></td>
                 <td>{{player.playerage}}</td>
                 <td>{{player.playercountry}}</td>
                 <td>{{player.playerposition}}</td>
@@ -42,7 +42,7 @@
                 const url = `/REST/playerall?page=${this.page}`;
                 const headers = {"Content-Type":"application/json"}
                 const response = await axios.get(url, {headers});
-                // console.log(response);
+                console.log(response);
                 this.players = response.data.player;
  
                 const url1 = `/REST/playercount` //전체 선수 숫자 조회 주소 입력
@@ -50,6 +50,9 @@
                 console.log(response1);
                 //전체 선수 수를 통해 페이지네이션 숫자 생성
                 this.totalpage = Number(response1.data.count);
+            },
+            async nextPage(playerno) {
+                this.$router.push({name: 'Player_One', query:{no:playerno}});
             }
         },
         async created(){
