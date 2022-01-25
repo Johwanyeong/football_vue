@@ -2,8 +2,38 @@
     <div>
         <h3>선수 상세 페이지</h3>
         {{no}}
+            <el-container>
+            <el-aside width="200px">
+                Aside
+                <img :src="`${playerimg}`" style="width: 200px; height: 200px" />
+            </el-aside>
+            <el-main>
+                Main
+                <el-form-item label="이름">
+                {{player.playername}}
+            </el-form-item>
+            <el-form-item label="나이">
+                {{player.playerage}} 세
+            </el-form-item>
+            <el-form-item label="신장">
+                {{player.playerheight}} cm
+            </el-form-item>
+            <el-form-item label="몸무게">
+                {{player.playerweight}} kg
+            </el-form-item>
+            <el-form-item label="포지션">
+                {{player.playerposition}}
+            </el-form-item>
+            <el-form-item label="국적">
+                {{player.playercountry}}
+            </el-form-item>
+            <el-form-item label="몸 값">
+                {{player.playerprice}} \
+            </el-form-item>
+            </el-main>
+            </el-container>
         <hr />
-        <el-form ref="formRef" :model="form" label-width="120px">
+        <!-- <el-form ref="formRef" :model="form" label-width="120px">
             <el-form-item label="사진">
                 <img :src="`${playerimg}`" style="width: 100px; height: 100px" />
             </el-form-item>
@@ -28,7 +58,7 @@
             <el-form-item label="몸 값">
                 {{player.playerprice}} \
             </el-form-item>
-        </el-form>
+        </el-form> -->
         <hr />
         <input type="hidden" v-model="text" 
             placeholder="검색" @keyup.enter="handleSearch" />
@@ -50,7 +80,7 @@
             <span class="ml-3 w-35 text-gray-600 inline-flex items-center">내용</span>
                 <el-input v-model="content" type="textarea" placeholder="리뷰 내용 입력" style="width: 300px;" ></el-input>
             <br />
-            <span class="ml-3 w-35 text-gray-600 inline-flex items-center">평점들</span>
+            <span class="ml-3 w-35 text-gray-600 inline-flex items-center">평점</span>
                 <select v-model="rating" >
                     <option value=1>1</option>
                     <option value=2>2</option>
