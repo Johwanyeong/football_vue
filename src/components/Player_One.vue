@@ -9,34 +9,6 @@
             </el-aside>
             <el-main>
                 Main
-                <el-form-item label="이름">
-                {{player.playername}}
-            </el-form-item>
-            <el-form-item label="나이">
-                {{player.playerage}} 세
-            </el-form-item>
-            <el-form-item label="신장">
-                {{player.playerheight}} cm
-            </el-form-item>
-            <el-form-item label="몸무게">
-                {{player.playerweight}} kg
-            </el-form-item>
-            <el-form-item label="포지션">
-                {{player.playerposition}}
-            </el-form-item>
-            <el-form-item label="국적">
-                {{player.playercountry}}
-            </el-form-item>
-            <el-form-item label="몸 값">
-                {{player.playerprice}} \
-            </el-form-item>
-            </el-main>
-            </el-container>
-        <hr />
-        <!-- <el-form ref="formRef" :model="form" label-width="120px">
-            <el-form-item label="사진">
-                <img :src="`${playerimg}`" style="width: 100px; height: 100px" />
-            </el-form-item>
             <el-form-item label="이름">
                 {{player.playername}}
             </el-form-item>
@@ -58,7 +30,16 @@
             <el-form-item label="몸 값">
                 {{player.playerprice}} \
             </el-form-item>
-        </el-form> -->
+            <el-form-item label="소속 팀">
+                {{teamname}}
+            </el-form-item>
+            <el-form-item label="에이전트">
+                {{agentname}}
+            </el-form-item>
+            </el-main>
+            </el-container>
+        <hr />
+        <el-button type="primary" @click="handleScout" plain>스카우트</el-button>
         <hr />
         <input type="hidden" v-model="text" 
             placeholder="검색" @keyup.enter="handleSearch" />
@@ -110,6 +91,8 @@
                 console.log(response);
                 this.player = response.data.player;
                 this.playerimg = response.data.playerimg;
+                this.teamname = response.data.teamname;
+                this.agentname = response.data.agentname;
             },
             async handleReview() {
                 //유효성 검사
@@ -144,34 +127,60 @@
                 const url = `/REST/pnoreview?page=1&pno=${this.no}`;
                 const headers = {"Content-Type":"application/json"};
                 const response = await axios.get(url,{headers});
-                console.log(response);
+                // console.log(response);
                 this.reviews = response.data.review;
  
                 const url1 = `/REST/pnoreviewcount?pno=${this.no}` //선수 별 리뷰 숫자 조회 주소 입력
                 const response1 = await axios.get(url1);
-                console.log(response1);
+                // console.log(response1);
                 //선수 별 리뷰 숫자를 통해 페이지네이션 숫자 생성
                 this.totalpage = Number(response1.data.count);
             },
+            //스카우트 목록 추가
+            async handleScout(){
+                const url = `/REST/scoutinsert`;
+                const headers = {"Content-Type":"application/json",
+                    token : this.token};
+                const body = {player : this.player};
+                if(this.token != null){
+                    const response = await axios.post(url,body,{headers});
+                    console.log(response);
+                    if(response.data.status === 200){
+                        alert("스카우트 목록에 추가하였습니다.");
+                    }
+                    else if(response.data.status === "선수 중복"){
+                        alert("이미 스카우트 목록에 추가된 선수입니다.");
+                    }
+                }
+                else{
+                    alert("로그인 후 이용 가능합니다.");
+                    this.$router.push({name:'Login'}); // 로그인 화면으로 이동
+                }
+            }
         },
         async created(){
             await this.handleSearch();
         },
         data(){
             return {
+                //선수 정보
                 player : '',
                 playerimg : '',
+                teamname : '',
+                agentname : '',
                 no : this.$route.query.no,
 
+                //리뷰 목록
                 reviews : [],
                 page : 1,
                 totalpage : 0,
                 text : '',
 
+                //리뷰 등록
                 //세션 스토리지에서 토큰 읽기
                 token : sessionStorage.getItem("TOKEN"),
                 content : '',
-                rating : 0
+                rating : 0,
 
             }
         },
