@@ -11,17 +11,15 @@
                 <td>국적</td>
                 <td>포지션</td>
                 <td>몸 값</td>
-                <td>삭제</td>
+                
             </tr>
             <tr v-for="scoutlist in scoutlists" v-bind:key="scoutlist">
-                <td>{{scoutlist.scoutno}}</td>
+                <td><a href="#" @click="handleScout(scoutlist.scoutno)">{{scoutlist.scoutno}}</a></td>
                 <td><a href="#" @click="nextPage(scoutlist.player.playerno)">{{scoutlist.player.playername}}</a></td>
                 <td>{{scoutlist.player.playerage}}</td>
                 <td>{{scoutlist.player.playercountry}}</td>
                 <td>{{scoutlist.player.playerposition}}</td>
                 <td>{{scoutlist.player.playerprice}}</td>
-                <td><el-button @click="handleDelete" type="danger">
-                    <input type="hidden" v-model="sno" >{{scoutlist.scoutno}}</el-button></td>
             </tr>
         </table>
         <el-pagination 
@@ -57,12 +55,13 @@
             async nextPage(playerno) {
                 this.$router.push({name: 'Player_One', query:{no:playerno}});
             },
-            async handleDelete(){
-                const url = `/REST/scoutdelete?sno=${this.sno}`;
-                const headers = {"Content-Type":"application/json",
-                    token : this.token};
-                const response = await axios.delete(url,{headers});
-                console.log(response);
+            async handleScout(scoutno){
+                this.$router.push({name: 'Scout_One', query:{sno:scoutno}});
+                // const url = `/REST/scoutdelete?sno=${this.sno}`;
+                // const headers = {"Content-Type":"application/json",
+                //     token : this.token};
+                // const response = await axios.delete(url,{headers});
+                // console.log(response);
             }
         },
         async created(){
@@ -78,7 +77,7 @@
                 totalpage : '',
                 text : '',
 
-                sno : ''
+                // sno : this.$route.query.no
             }
         }
     }
