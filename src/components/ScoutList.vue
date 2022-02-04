@@ -57,11 +57,6 @@
             },
             async handleScout(scoutno){
                 this.$router.push({name: 'Scout_One', query:{sno:scoutno}});
-                // const url = `/REST/scoutdelete?sno=${this.sno}`;
-                // const headers = {"Content-Type":"application/json",
-                //     token : this.token};
-                // const response = await axios.delete(url,{headers});
-                // console.log(response);
             }
         },
         async created(){
