@@ -62,7 +62,7 @@
                 const url = `/REST/contractinsert`;
                 const headers = {"Content-Type":"application/json",
                             token : this.token};
-                const body = {scout : this.scout, player : this.player};
+                const body = {scout : this.scout}
                 const response = await axios.post(url,body,{headers});
                 console.log(response);
                 // this.$router.push({name:'ScoutList'}); //성공 시 ScoutList로 이동
