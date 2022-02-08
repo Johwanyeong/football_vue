@@ -4,7 +4,7 @@
         스카우트 번호 {{scout.scoutno}} <br />
         선수 이름  <input type="text" v-model="player.playername" readonly>  <br />
         선수 나이 <input type="text" v-model="player.playerage" readonly>세 <br />
-        선수 몸 값 <input type="text" v-model="player.playerprice" >\ <br />
+        선수 몸 값 <input type="text" v-model="playerprice" >\ <br />
         선수 신장 <input type="text" v-model="player.playerheight" readonly>cm <br />
         선수 몸무게 <input type="text" v-model="player.playerweight" readonly>kg <br />
         선수 포지션 <input type="text" v-model="player.playerposition" readonly> <br />
@@ -33,6 +33,7 @@
             // console.log(response);
             this.scout = response.data.scout;
             this.player = response.data.scout.player;
+            this.playerprice = response.data.scout.player.playerprice;
             this.agent = response.data.scout.player.agent;
 
             //팀 목록 조회
@@ -75,6 +76,7 @@
                 sno : this.$route.query.sno,
                 scout : '',
                 player : '',
+                playerprice : '',
                 team : '',
                 agent : '',
                 teams : []
