@@ -4,7 +4,7 @@
         스카우트 번호 {{scout.scoutno}} <br />
         선수 이름  <input type="text" v-model="player.playername" readonly>  <br />
         선수 나이 <input type="text" v-model="player.playerage" readonly>세 <br />
-        선수 몸 값 <input type="text" v-model="playerprice" >\ <br />
+        선수 몸 값 <input type="text" v-model="player.playerprice" >\ <br />
         선수 신장 <input type="text" v-model="player.playerheight" readonly>cm <br />
         선수 몸무게 <input type="text" v-model="player.playerweight" readonly>kg <br />
         선수 포지션 <input type="text" v-model="player.playerposition" readonly> <br />
@@ -33,7 +33,6 @@
             // console.log(response);
             this.scout = response.data.scout;
             this.player = response.data.scout.player;
-            this.playerprice = response.data.scout.player.playerprice;
             this.agent = response.data.scout.player.agent;
 
             //팀 목록 조회
@@ -60,13 +59,22 @@
                     }
             },
             async handleContract(){
-                const url = `/REST/contractinsert`;
+                const url = `/REST/contractinsert?sno=${this.sno}`;
                 const headers = {"Content-Type":"application/json",
                             token : this.token};
-                const body = {scout : this.scout}
+                const body = new FormData();
+                    body.append("scout", this.sno);
+                    body.append("playerprice", this.player.playerprice);
+                    body.append("team", this.team);
                 const response = await axios.post(url,body,{headers});
                 console.log(response);
-                // this.$router.push({name:'ScoutList'}); //성공 시 ScoutList로 이동
+                 if(response.data.status === 200){
+                    alert("계약에 성공했습니다.");
+                    this.$router.push({name:'ScoutList'}); //성공 시 ScoutList로 이동
+                }
+                else{
+                    alert("계약에 실패했습니다.")
+                }
             }
         },
         data(){
@@ -76,7 +84,6 @@
                 sno : this.$route.query.sno,
                 scout : '',
                 player : '',
-                playerprice : '',
                 team : '',
                 agent : '',
                 teams : []
