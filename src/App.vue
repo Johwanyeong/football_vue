@@ -7,6 +7,7 @@
     <router-link v-if="adminLogged" to="/Registration">Registration</router-link>|
     <router-link to="/PlayerList">PlayerList</router-link>|
     <router-link v-if="!adminLogged & logged" to="/ScoutList">ScoutList</router-link>|
+    <router-link  to="/TeamList">TeamList</router-link>|
 
     <hr />
     <el-menu
