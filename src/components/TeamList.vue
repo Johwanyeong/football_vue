@@ -8,7 +8,9 @@
                         <el-menu default-active="2" class="el-menu-vertical-demo" v-model="team" @open="handleOpen" @close="handleClose">
                             <el-menu-item index="2" v-for="(team,index) in teams" v-bind:key="index" :value="team.teamno" >
                                 <el-icon><icon-menu /></el-icon>
-                                    <span @click="handelTeam(team.teamno)">{{team.teamname}}</span>
+                                    <span>
+                                        <a @click="handelTeam(team.teamno)">{{team.teamname}}</a>
+                                    </span>
                             </el-menu-item>
                         </el-menu>
                     </el-col>
@@ -41,30 +43,21 @@
                 </el-pagination>
             </el-main>
         </el-container>
-        
-
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     export default {
-        // async mounted(){
-        //      const url = `/REST/bnoplayer?page=${this.page}&bno=${this.teams.teamno}`;
-        //         const headers = {"Content-Type":"application/json"}
-        //         const response = await axios.get(url, {headers});
-        //         console.log(response);
-        //         this.players = response.data.player;
-        // },
+        async mounted(){
+            //팀 목록 조회
+            const url = "/REST/teamall";
+            const headers = {"Content-Type":"application/json"}
+            const response = await axios.get(url, {headers});
+            console.log(response);
+            this.teams = response.data.team;
+        },
         methods:{
-            async handelTeam(teamno){
-                ({query:{bno:teamno}});
-                const url = `/REST/bnoplayer?/REST/teamone?no=${this.bno}`;
-                const headers = {"Content-Type":"application/json"}
-                const response = await axios.get(url, {headers});
-                console.log(response);
-                
-            },
 
             //페이지 이동
             async handleCurrentChange(val){
@@ -86,16 +79,12 @@
             },
             async nextPage(playerno) {
                 this.$router.push({name: 'Player_One', query:{no:playerno}});
-            }
+            },
+            async handelTeam(teamno) {
+                this.$router.push({name: 'TeamPlayerList', query:{no:teamno}});
+            },
         },
-        async created(){    
-            //팀 목록 조회
-            const url = "/REST/teamall";
-            const headers = {"Content-Type":"application/json"}
-            const response = await axios.get(url, {headers});
-            console.log(response);
-            this.teams = response.data.team;
-        },
+        
         data(){
             return{
                 teams : [],

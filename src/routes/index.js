@@ -10,6 +10,7 @@ import Player_One from '@/components/Player_One'
 import ScoutList from '@/components/ScoutList'
 import Scout_One from '@/components/Scout_One'
 import TeamList from '@/components/TeamList'
+import TeamPlayerList from '@/components/TeamPlayerList'
 
 const routes = [
     {path:'/',  name:'Home', component:Home},
@@ -22,6 +23,7 @@ const routes = [
     {path:'/ScoutList',  name:'ScoutList', component:ScoutList},
     {path:'/Scout_One',  name:'Scout_One', component:Scout_One},
     {path:'/TeamList',  name:'TeamList', component:TeamList},
+    {path:'/TeamPlayerList',  name:'TeamPlayerList', component:TeamPlayerList},
 ]
 
 const router = createRouter({
