@@ -58,7 +58,6 @@
             this.teams = response.data.team;
         },
         methods:{
-
             //페이지 이동
             async handleCurrentChange(val){
                 this.page = val;
@@ -84,12 +83,20 @@
                 this.$router.push({name: 'TeamPlayerList', query:{no:teamno}});
             },
         },
-        
+        async created(){
+            await this.handleSearch();
+            //팀 정보
+            const url2 = `/REST/teamone?bno=${this.no}`;
+            const headers2 = {"Content-Type":"application/json"}
+            const response = await axios.get(url2, {headers2});
+            console.log(response);
+            this.team = response.data.team;
+        },
         data(){
             return{
                 teams : [],
                 players : [],
-                no: '',
+                no: this.$route.query.no,
                 bno: this.$route.query.teamno,
                 page : 1,
                 totalpage : 0,
